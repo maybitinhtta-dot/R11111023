@@ -25,6 +25,7 @@ import { StorefrontView } from './components/Storefront/StorefrontView';
 import { ProductDetailModal } from './components/Storefront/ProductDetailModal';
 import { CartDrawer } from './components/Storefront/CartDrawer';
 import { CheckoutModal } from './components/Storefront/CheckoutModal';
+import { QRCodeModal } from './components/Navigation/QRCodeModal';
 import { AdminDashboard } from './components/Admin/AdminDashboard';
 
 export default function App() {
@@ -45,6 +46,7 @@ export default function App() {
   ]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
+  const [isQROpen, setIsQROpen] = useState<boolean>(true);
   const [appliedDiscountPercent, setAppliedDiscountPercent] = useState<number>(15);
   const [selectedProductForDetail, setSelectedProductForDetail] = useState<Product | null>(null);
 
@@ -185,6 +187,7 @@ export default function App() {
         storeName={config.name}
         cartCount={totalCartCount}
         openCart={() => setIsCartOpen(true)}
+        onOpenQR={() => setIsQROpen(true)}
       />
 
       {/* Main View Area */}
@@ -254,6 +257,17 @@ export default function App() {
         onOrderCompleted={handleOrderCompleted}
         onViewAdminOrder={() => {
           setActiveTab('admin');
+        }}
+      />
+
+      {/* QR Code Presentation Modal */}
+      <QRCodeModal
+        isOpen={isQROpen}
+        onClose={() => setIsQROpen(false)}
+        storeUrl={`https://${config.handle}.myshopify.com`}
+        onOpenMobilePreview={() => {
+          setActiveTab('storefront');
+          setViewportMode('mobile');
         }}
       />
     </div>

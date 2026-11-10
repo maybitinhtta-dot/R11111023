@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActiveTab, ViewportMode } from '../../types/store';
-import { Store, LayoutDashboard, Sparkles, Monitor, Tablet, Smartphone, ShoppingBag } from 'lucide-react';
+import { Store, LayoutDashboard, Sparkles, Monitor, Tablet, Smartphone, ShoppingBag, QrCode } from 'lucide-react';
 
 interface GlobalHeaderProps {
   activeTab: ActiveTab;
@@ -10,6 +10,7 @@ interface GlobalHeaderProps {
   storeName: string;
   cartCount: number;
   openCart: () => void;
+  onOpenQR: () => void;
 }
 
 export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
@@ -20,6 +21,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   storeName,
   cartCount,
   openCart,
+  onOpenQR,
 }) => {
   return (
     <header className="sticky top-0 z-50 bg-slate-900 text-slate-100 border-b border-slate-800 px-4 md:px-6 py-3 transition-colors">
@@ -121,6 +123,15 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
               </button>
             </div>
           )}
+
+          <button
+            onClick={onOpenQR}
+            title="查看品牌專屬二維條碼"
+            className="px-2.5 py-2 text-xs font-medium text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg transition-colors flex items-center gap-1.5 whitespace-nowrap"
+          >
+            <QrCode className="w-4 h-4 text-amber-400" />
+            <span className="hidden sm:inline">QR 碼</span>
+          </button>
 
           {activeTab === 'storefront' ? (
             <button
